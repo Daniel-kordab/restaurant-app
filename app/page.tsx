@@ -212,7 +212,7 @@ export default function Home() {
         setLoading(true);
         
         // First, fetch available languages from Strapi
-        const languagesResponse = await fetch('http://localhost:1337/api/languages?sort=order:asc');
+        const languagesResponse = await fetch('https://playful-reward-a90b0fd376.strapiapp.com/api/languages?sort=order:asc');
         
         if (languagesResponse.ok) {
           const languagesData = await languagesResponse.json();
@@ -307,7 +307,7 @@ export default function Home() {
 
   // Build API URL with locale parameter
   const buildApiUrl = (endpoint: string, locale: string): string => {
-    const baseUrl = 'http://localhost:1337/api';
+    const baseUrl = 'https://playful-reward-a90b0fd376.strapiapp.com/api';
     const separator = endpoint.includes('?') ? '&' : '?';
     return `${baseUrl}/${endpoint}${separator}locale=${locale}`;
   };
@@ -598,7 +598,7 @@ export default function Home() {
               <div className="order-2 lg:order-1">
                 {serviceSection.image?.url ? (
                   <img 
-                    src={`http://localhost:1337${serviceSection.image.url}`}
+                    src={`https://playful-reward-a90b0fd376.strapiapp.com${serviceSection.image.url}`}
                     alt={serviceSection.image.alternativeText || 'Services'}
                     className="w-full h-96 object-cover rounded-lg shadow-lg"
                   />
@@ -765,7 +765,7 @@ export default function Home() {
                   <div className="absolute -top-6 left-6">
                     {testimonial.profile_image?.url ? (
                       <img
-                        src={`http://localhost:1337${testimonial.profile_image.url}`}
+                        src={`https://playful-reward-a90b0fd376.strapiapp.com${testimonial.profile_image.url}`}
                         alt={testimonial.profile_image.alternativeText || testimonial.name}
                         className="w-12 h-12 rounded-full object-cover border-4 border-white shadow-md"
                       />
@@ -797,7 +797,7 @@ export default function Home() {
             <div className="text-center py-12">
               <p className="text-gray-600 mb-4">No testimonials found. Add testimonials in Strapi admin.</p>
               <a
-                href="http://localhost:1337/admin"
+                href="https://playful-reward-a90b0fd376.strapiapp.com/admin"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800"
@@ -844,7 +844,7 @@ export default function Home() {
             <div className="text-center py-12">
               <p className="text-gray-600 mb-4">No FAQs found. Add FAQs in Strapi admin.</p>
               <a
-                href="http://localhost:1337/admin"
+                href="https://playful-reward-a90b0fd376.strapiapp.com/admin"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800"
@@ -866,7 +866,7 @@ export default function Home() {
                 <div key={company.id} className="flex items-center justify-center">
                   {company.logo?.url ? (
                     <img 
-                      src={`http://localhost:1337${company.logo.url}`}
+                      src={`https://playful-reward-a90b0fd376.strapiapp.com${company.logo.url}`}
                       alt={company.logo.alternativeText || company.name}
                       className="h-16 md:h-20 lg:h-24 object-contain grayscale hover:grayscale-0 transition-all duration-300"
                     />
