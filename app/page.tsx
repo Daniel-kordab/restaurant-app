@@ -192,13 +192,13 @@ export default function Home() {
   const [packageFeatures, setPackageFeatures] = useState<PackageFeature[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
-  
+
   // Language state
   const [languages, setLanguages] = useState<Language[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState('EN');
   const [currentLocale, setCurrentLocale] = useState('en');
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
-  
+
   // UI state
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [activePackageType, setActivePackageType] = useState<'Flex' | 'Fixed-Price'>('Flex');
@@ -210,18 +210,18 @@ export default function Home() {
     const initializeApp = async () => {
       try {
         setLoading(true);
-        
+
         // First, fetch available languages from Strapi
         const languagesResponse = await fetch('https://playful-reward-a90b0fd376.strapiapp.com/api/languages?sort=order:asc');
-        
+
         if (languagesResponse.ok) {
           const languagesData = await languagesResponse.json();
           const activeLanguages = languagesData.data?.filter((lang: Language) => lang.is_active) || [];
           setLanguages(activeLanguages);
-          
+
           // Determine which language to use
           let targetLanguage = activeLanguages.find((lang: Language) => lang.is_default) || activeLanguages[0];
-          
+
           // Check for saved language preference
           const savedLanguage = localStorage.getItem('preferredLanguage');
           if (savedLanguage) {
@@ -235,11 +235,11 @@ export default function Home() {
               console.warn('Invalid saved language preference');
             }
           }
-          
+
           if (targetLanguage) {
             setCurrentLanguage(targetLanguage.code);
             setCurrentLocale(targetLanguage.local); // Fixed: Changed from 'locale' to 'local'
-            
+
             // Load content for the target language
             await fetchContentForLocale(targetLanguage.local); // Fixed: Changed from 'locale' to 'local'
           } else {
@@ -288,15 +288,15 @@ export default function Home() {
       setCurrentLanguage(language.code);
       setCurrentLocale(language.local); // Fixed: Changed from 'locale' to 'local'
       setShowLanguageMenu(false);
-      
+
       console.log('🔄 Switching to:', language.name, 'Local:', language.local); // Fixed: Changed from 'Locale' to 'Local'
-      
+
       // Fetch content for the selected language
       await fetchContentForLocale(language.local); // Fixed: Changed from 'locale' to 'local'
-      
+
       // Save language preference
       localStorage.setItem('preferredLanguage', JSON.stringify(language));
-      
+
     } catch (error) {
       console.error('Error changing language:', error);
       setError('Failed to load content in selected language');
@@ -363,7 +363,7 @@ export default function Home() {
       setFaqs(faqsData.data || []);
 
       console.log('✅ Content loaded successfully for locale:', locale);
-      
+
     } catch (err) {
       console.error('❌ Error fetching content:', err);
       throw err;
@@ -410,7 +410,7 @@ export default function Home() {
           <div className="text-6xl mb-4">⚠️</div>
           <div className="text-2xl text-red-600 mb-4">Error!</div>
           <div className="text-gray-600 mb-6">{error}</div>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
           >
@@ -430,7 +430,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="text-xl font-bold text-blue-600">ITGrate</div>
-            
+
             <div className="hidden md:flex space-x-6">
               <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
               <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
@@ -441,7 +441,7 @@ export default function Home() {
               <a href="#faqs" className="text-gray-600 hover:text-gray-900 transition-colors">FAQs</a>
               <a href="#trusted-by" className="text-gray-600 hover:text-gray-900 transition-colors">Trusted By</a>
               <a href="#contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
-              
+
               {/* Dynamic Language Switcher */}
               {languages.length > 0 && (
                 <div className="relative language-switcher">
@@ -458,35 +458,34 @@ export default function Home() {
                       ▼
                     </span>
                   </button>
-                  
+
                   {showLanguageMenu && (
                     <div className="absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg py-2 min-w-[160px] z-50">
                       {languages
                         .sort((a, b) => a.order - b.order)
                         .map((language) => (
-                        <button
-                          key={language.id}
-                          onClick={() => handleLanguageChange(language)}
-                          disabled={loading}
-                          className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors flex items-center space-x-3 disabled:opacity-50 ${
-                            currentLanguage === language.code 
-                              ? 'bg-blue-50 text-blue-600 font-medium' 
-                              : 'text-gray-700'
-                          }`}
-                        >
-                          <span className="text-lg">{language.flag_emoji}</span>
-                          <span>{language.name}</span>
-                          {currentLanguage === language.code && (
-                            <span className="ml-auto text-blue-600 font-bold">✓</span>
-                          )}
-                        </button>
-                      ))}
+                          <button
+                            key={language.id}
+                            onClick={() => handleLanguageChange(language)}
+                            disabled={loading}
+                            className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors flex items-center space-x-3 disabled:opacity-50 ${currentLanguage === language.code
+                                ? 'bg-blue-50 text-blue-600 font-medium'
+                                : 'text-gray-700'
+                              }`}
+                          >
+                            <span className="text-lg">{language.flag_emoji}</span>
+                            <span>{language.name}</span>
+                            {currentLanguage === language.code && (
+                              <span className="ml-auto text-blue-600 font-bold">✓</span>
+                            )}
+                          </button>
+                        ))}
                     </div>
                   )}
                 </div>
               )}
             </div>
-            
+
             {/* Mobile Language Switcher */}
             <div className="md:hidden flex items-center space-x-4">
               {languages.length > 0 && (
@@ -501,29 +500,28 @@ export default function Home() {
                     </span>
                     <span className="text-sm">{currentLanguage}</span>
                   </button>
-                  
+
                   {showLanguageMenu && (
                     <div className="absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg py-2 min-w-[140px] z-50">
                       {languages
                         .sort((a, b) => a.order - b.order)
                         .map((language) => (
-                        <button
-                          key={language.id}
-                          onClick={() => handleLanguageChange(language)}
-                          disabled={loading}
-                          className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors flex items-center space-x-2 disabled:opacity-50 ${
-                            currentLanguage === language.code 
-                              ? 'bg-blue-50 text-blue-600 font-medium' 
-                              : 'text-gray-700'
-                          }`}
-                        >
-                          <span>{language.flag_emoji}</span>
-                          <span>{language.name}</span>
-                          {currentLanguage === language.code && (
-                            <span className="ml-auto text-blue-600">✓</span>
-                          )}
-                        </button>
-                      ))}
+                          <button
+                            key={language.id}
+                            onClick={() => handleLanguageChange(language)}
+                            disabled={loading}
+                            className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors flex items-center space-x-2 disabled:opacity-50 ${currentLanguage === language.code
+                                ? 'bg-blue-50 text-blue-600 font-medium'
+                                : 'text-gray-700'
+                              }`}
+                          >
+                            <span>{language.flag_emoji}</span>
+                            <span>{language.name}</span>
+                            {currentLanguage === language.code && (
+                              <span className="ml-auto text-blue-600">✓</span>
+                            )}
+                          </button>
+                        ))}
                     </div>
                   )}
                 </div>
@@ -597,8 +595,10 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
                 {serviceSection.image?.url ? (
-                  <img 
-                    src={`https://playful-reward-a90b0fd376.strapiapp.com${serviceSection.image.url}`}
+                  <img
+                    src={serviceSection.image.url.startsWith('http')
+                      ? serviceSection.image.url
+                      : `https://playful-reward-a90b0fd376.strapiapp.com${serviceSection.image.url}`}
                     alt={serviceSection.image.alternativeText || 'Services'}
                     className="w-full h-96 object-cover rounded-lg shadow-lg"
                   />
@@ -676,32 +676,30 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-gray-900 mb-8">
               {offeringsSection?.subtitle || "All Packages at a Glance"}
             </h2>
-            
+
             {/* Package Type Tabs */}
             <div className="flex justify-center space-x-8 mb-8">
               <button
                 onClick={() => setActivePackageType('Flex')}
-                className={`font-semibold text-lg pb-2 transition-colors ${
-                  activePackageType === 'Flex'
+                className={`font-semibold text-lg pb-2 transition-colors ${activePackageType === 'Flex'
                     ? 'text-gray-900 border-b-2 border-blue-600'
                     : 'text-gray-500 hover:text-gray-700'
-                }`}
+                  }`}
               >
                 Flex
               </button>
               <button
                 onClick={() => setActivePackageType('Fixed-Price')}
-                className={`font-semibold text-lg pb-2 transition-colors ${
-                  activePackageType === 'Fixed-Price'
+                className={`font-semibold text-lg pb-2 transition-colors ${activePackageType === 'Fixed-Price'
                     ? 'text-gray-900 border-b-2 border-blue-600'
                     : 'text-gray-500 hover:text-gray-700'
-                }`}
+                  }`}
               >
                 Fixed-Price
               </button>
             </div>
           </div>
-          
+
           {packages.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {packages
@@ -727,7 +725,7 @@ export default function Home() {
               }
             </div>
           )}
-          
+
           {/* Package Features - Dynamic Content from Strapi */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {packageFeatures
@@ -757,7 +755,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          
+
           {testimonials.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {testimonials.map((testimonial) => (
@@ -777,12 +775,12 @@ export default function Home() {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="pt-8">
                     <div className="text-gray-700 text-sm leading-relaxed mb-4">
                       {getTextFromRichText(testimonial.content)}
                     </div>
-                    
+
                     <div className="text-right">
                       <p className="font-semibold text-blue-600">{testimonial.name}</p>
                       {testimonial.company && (
@@ -813,7 +811,7 @@ export default function Home() {
       <div id="faqs" className="bg-white py-16">
         <div className="max-w-4xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">FAQs</h2>
-          
+
           {faqs.length > 0 ? (
             <div className="space-y-4">
               {faqs.map((faq) => (
@@ -829,7 +827,7 @@ export default function Home() {
                       {expandedFaq === faq.id ? '−' : '+'}
                     </span>
                   </button>
-                  
+
                   {expandedFaq === faq.id && (
                     <div className="px-6 pb-4">
                       <div className="text-gray-700 leading-relaxed">
@@ -865,7 +863,7 @@ export default function Home() {
               {companyLogos.map((company) => (
                 <div key={company.id} className="flex items-center justify-center">
                   {company.logo?.url ? (
-                    <img 
+                    <img
                       src={`https://playful-reward-a90b0fd376.strapiapp.com${company.logo.url}`}
                       alt={company.logo.alternativeText || company.name}
                       className="h-16 md:h-20 lg:h-24 object-contain grayscale hover:grayscale-0 transition-all duration-300"
