@@ -429,7 +429,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
         <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-xl font-bold text-blue-600">ITGrate</div>
+            <div className="text-xl font-bold text-blue-600">Value Developer</div>
 
             <div className="hidden md:flex space-x-6">
               <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
@@ -469,8 +469,8 @@ export default function Home() {
                             onClick={() => handleLanguageChange(language)}
                             disabled={loading}
                             className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors flex items-center space-x-3 disabled:opacity-50 ${currentLanguage === language.code
-                                ? 'bg-blue-50 text-blue-600 font-medium'
-                                : 'text-gray-700'
+                              ? 'bg-blue-50 text-blue-600 font-medium'
+                              : 'text-gray-700'
                               }`}
                           >
                             <span className="text-lg">{language.flag_emoji}</span>
@@ -511,8 +511,8 @@ export default function Home() {
                             onClick={() => handleLanguageChange(language)}
                             disabled={loading}
                             className={`w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors flex items-center space-x-2 disabled:opacity-50 ${currentLanguage === language.code
-                                ? 'bg-blue-50 text-blue-600 font-medium'
-                                : 'text-gray-700'
+                              ? 'bg-blue-50 text-blue-600 font-medium'
+                              : 'text-gray-700'
                               }`}
                           >
                             <span>{language.flag_emoji}</span>
@@ -682,8 +682,8 @@ export default function Home() {
               <button
                 onClick={() => setActivePackageType('Flex')}
                 className={`font-semibold text-lg pb-2 transition-colors ${activePackageType === 'Flex'
-                    ? 'text-gray-900 border-b-2 border-blue-600'
-                    : 'text-gray-500 hover:text-gray-700'
+                  ? 'text-gray-900 border-b-2 border-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
                   }`}
               >
                 Flex
@@ -691,8 +691,8 @@ export default function Home() {
               <button
                 onClick={() => setActivePackageType('Fixed-Price')}
                 className={`font-semibold text-lg pb-2 transition-colors ${activePackageType === 'Fixed-Price'
-                    ? 'text-gray-900 border-b-2 border-blue-600'
-                    : 'text-gray-500 hover:text-gray-700'
+                  ? 'text-gray-900 border-b-2 border-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
                   }`}
               >
                 Fixed-Price
